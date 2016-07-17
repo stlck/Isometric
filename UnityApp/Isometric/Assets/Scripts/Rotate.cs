@@ -5,6 +5,8 @@ public class Rotate : MonoBehaviour {
 
     public float speed;
     public LayerMask HitMask;
+
+    public Vector3 LastTarget;
 	
 	// Update is called once per frame
 	void Update () {
@@ -14,9 +16,24 @@ public class Rotate : MonoBehaviour {
         // Generate a ray from the cursor position
         var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
-        float hitdist = 0.0f;
         RaycastHit hit;
-        if (Physics.Raycast(ray, out hit, 100, HitMask) && Vector3.Distance( hit.point,transform.position) > 4)
+
+        if (Physics.SphereCast(ray, 2, out hit, 100, HitMask))
+        {
+            var targetPoint = hit.point;// ray.GetPoint(hitdist);
+            if(hit.collider.tag == "Enemy")
+            {
+                targetPoint = hit.transform.position;
+            }
+            else
+            {
+                targetPoint.y = transform.position.y;
+            }
+            LastTarget = targetPoint;
+            transform.LookAt(targetPoint);//rotation = Quaternion.LookRotation(targetPoint - transform.position);
+        }
+
+        /*if (Physics.Raycast(ray, out hit, 100, HitMask) && Vector3.Distance( hit.point,transform.position) > 4)
         {
             var targetPoint = hit.point;// ray.GetPoint(hitdist);
 
@@ -37,7 +54,7 @@ public class Rotate : MonoBehaviour {
 
             // Smoothly rotate towards the target point.
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, speed * Time.deltaTime);
-        }
+        }*/
 	}
 
 

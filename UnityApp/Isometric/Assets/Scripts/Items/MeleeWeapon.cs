@@ -9,9 +9,9 @@ public class MeleeWeapon : Weapon
     Transform effects;
     List<Collider> targets = new List<Collider>();
 
-    public override void Use()
+    public override void Use(Vector3 target)
     {
-        base.Use();
+        base.Use(target);
 
         if(effects != null)
         {

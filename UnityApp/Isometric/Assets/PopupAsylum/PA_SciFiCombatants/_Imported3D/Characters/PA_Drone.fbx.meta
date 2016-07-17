@@ -1,7 +1,7 @@
 fileFormatVersion: 2
 guid: f14b6f7503476eb4e9b2afc1cc05e719
 ModelImporter:
-  serializedVersion: 18
+  serializedVersion: 19
   fileIDToRecycleName:
     100000: PA_Drone
     100002: //RootNode
@@ -47,6 +47,7 @@ ModelImporter:
   animations:
     legacyGenerateAnimations: 4
     bakeSimulation: 0
+    resampleRotations: 1
     optimizeGameObjects: 0
     motionNodeName: 
     animationImportErrors: 
@@ -54,9 +55,9 @@ ModelImporter:
     animationRetargetingWarnings: 
     animationDoRetargetingWarnings: 0
     animationCompression: 1
-    animationRotationError: .5
-    animationPositionError: .5
-    animationScaleError: .5
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
     animationWrapMode: 0
     extraExposedTransformPaths: []
     clipAnimations:
@@ -70,6 +71,7 @@ ModelImporter:
       level: 0
       cycleOffset: 0
       loop: 0
+      hasAdditiveReferencePose: 0
       loopTime: 0
       loopBlend: 0
       loopBlendOrientation: 0
@@ -86,6 +88,7 @@ ModelImporter:
       transformMask: []
       maskType: 0
       maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
     - serializedVersion: 16
       name: Pa_DroneSlowFromForward_Clip
       takeName: Take 001
@@ -96,6 +99,7 @@ ModelImporter:
       level: 0
       cycleOffset: 0
       loop: 0
+      hasAdditiveReferencePose: 0
       loopTime: 0
       loopBlend: 0
       loopBlendOrientation: 0
@@ -112,6 +116,7 @@ ModelImporter:
       transformMask: []
       maskType: 0
       maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
     - serializedVersion: 16
       name: PA_DroneBackwards_Clip
       takeName: Take 001
@@ -122,6 +127,7 @@ ModelImporter:
       level: 0
       cycleOffset: 0
       loop: 0
+      hasAdditiveReferencePose: 0
       loopTime: 0
       loopBlend: 0
       loopBlendOrientation: 0
@@ -138,6 +144,7 @@ ModelImporter:
       transformMask: []
       maskType: 0
       maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
     - serializedVersion: 16
       name: PA_DroneSlowFromBackwards_Clip
       takeName: Take 001
@@ -148,6 +155,7 @@ ModelImporter:
       level: 0
       cycleOffset: 0
       loop: 0
+      hasAdditiveReferencePose: 0
       loopTime: 0
       loopBlend: 0
       loopBlendOrientation: 0
@@ -164,6 +172,7 @@ ModelImporter:
       transformMask: []
       maskType: 0
       maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
     - serializedVersion: 16
       name: PA_DroneMoveRight_Clip
       takeName: Take 001
@@ -174,6 +183,7 @@ ModelImporter:
       level: 0
       cycleOffset: 0
       loop: 0
+      hasAdditiveReferencePose: 0
       loopTime: 0
       loopBlend: 0
       loopBlendOrientation: 0
@@ -190,6 +200,7 @@ ModelImporter:
       transformMask: []
       maskType: 0
       maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
     - serializedVersion: 16
       name: PA_DroneSlowFromRight_Clip
       takeName: Take 001
@@ -200,6 +211,7 @@ ModelImporter:
       level: 0
       cycleOffset: 0
       loop: 0
+      hasAdditiveReferencePose: 0
       loopTime: 0
       loopBlend: 0
       loopBlendOrientation: 0
@@ -216,6 +228,7 @@ ModelImporter:
       transformMask: []
       maskType: 0
       maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
     - serializedVersion: 16
       name: PA_DroneMoveLeft_Clip
       takeName: Take 001
@@ -226,6 +239,7 @@ ModelImporter:
       level: 0
       cycleOffset: 0
       loop: 0
+      hasAdditiveReferencePose: 0
       loopTime: 0
       loopBlend: 0
       loopBlendOrientation: 0
@@ -242,6 +256,7 @@ ModelImporter:
       transformMask: []
       maskType: 0
       maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
     - serializedVersion: 16
       name: PA_DroneSlowFromLeft_Clip
       takeName: Take 001
@@ -252,6 +267,7 @@ ModelImporter:
       level: 0
       cycleOffset: 0
       loop: 0
+      hasAdditiveReferencePose: 0
       loopTime: 0
       loopBlend: 0
       loopBlendOrientation: 0
@@ -268,6 +284,7 @@ ModelImporter:
       transformMask: []
       maskType: 0
       maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
     - serializedVersion: 16
       name: PA_DroneExplode_Clip
       takeName: Take 001
@@ -278,6 +295,7 @@ ModelImporter:
       level: 0
       cycleOffset: 0
       loop: 0
+      hasAdditiveReferencePose: 0
       loopTime: 0
       loopBlend: 0
       loopBlendOrientation: 0
@@ -294,6 +312,7 @@ ModelImporter:
       transformMask: []
       maskType: 0
       maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
     isReadable: 1
   meshes:
     lODScreenPercentages: []
@@ -314,20 +333,19 @@ ModelImporter:
     useFileScale: 0
   tangentSpace:
     normalSmoothAngle: 60
-    splitTangentsAcrossUV: 1
     normalImportMode: 0
-    tangentImportMode: 1
+    tangentImportMode: 4
   importAnimation: 1
   copyAvatar: 0
   humanDescription:
     human: []
     skeleton: []
-    armTwist: .5
-    foreArmTwist: .5
-    upperLegTwist: .5
-    legTwist: .5
-    armStretch: .0500000007
-    legStretch: .0500000007
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
     feetSpacing: 0
     rootMotionBoneName: 
     hasTranslationDoF: 0

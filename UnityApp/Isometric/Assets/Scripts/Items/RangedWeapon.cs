@@ -9,15 +9,18 @@ public class RangedWeapon : Weapon {
     List<Projectile> projectiles;
     int currentIndex = 0;
 
-    public override void Use()
+    public override void Use(Vector3 target)
     {
-        base.Use();
+        base.Use(target);
 
         for (int i = 0; i < ShotsFired; i++)
         {
             projectiles[currentIndex].transform.position = Owner.transform.position + Owner.transform.forward;// Projectile.transform.position;
-            projectiles[currentIndex].transform.forward = Owner.transform.forward + Owner.transform.up * Random.Range(-1 / MyPlayer.MyStats.Perception, 1 / MyPlayer.MyStats.Perception) + Owner.transform.right * Random.Range(-1 / MyPlayer.MyStats.Perception, 1 / MyPlayer.MyStats.Perception);
+            projectiles[currentIndex].transform.LookAt(target);
+            //projectiles[currentIndex].transform.forward = Owner.transform.forward;
+            //projectiles[currentIndex].transform.forward = 3 * Owner.transform.forward + Owner.transform.up * Random.Range(-1 / MyPlayer.MyStats.Perception, 1 / MyPlayer.MyStats.Perception) + Owner.transform.right * Random.Range(-1 / MyPlayer.MyStats.Perception, 1 / MyPlayer.MyStats.Perception);
             projectiles[currentIndex].gameObject.SetActive(true);
+            projectiles[currentIndex].ShootMe();
 
             currentIndex++;
             if (currentIndex >= projectiles.Count)
@@ -31,7 +34,7 @@ public class RangedWeapon : Weapon {
         ret.projectiles = new List<Projectile>();
         currentIndex = 0;
 
-        for(int i = 0; i < 10; i++)
+        for(int i = 0; i < 25; i++)
         {
             Projectile effects = Instantiate(Projectile);
             //effects.transform.SetParent(owner.transform, false);

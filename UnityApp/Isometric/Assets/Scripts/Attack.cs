@@ -8,9 +8,18 @@ public class Attack : MonoBehaviour
 {
     public ItemHandler ItemHandler;
     public bool HoveringUseAble = false;
+
+    LineRenderer line;
+    public Color StartColor;
+    public Color EndColor;
+
     void Awake()
     {
         ItemHandler = GetComponent<ItemHandler>();
+        if (line == null)
+            line = GetComponentInChildren<LineRenderer>();
+
+        OnScreenGUI.ToDo.Add(sendOnGUI);
     }
 
     void Update()
@@ -19,8 +28,14 @@ public class Attack : MonoBehaviour
         for (int i = 0; i < 3; i++)
             if ((Input.GetKey((i + 1).ToString()) || Input.GetButton("Fire" + (i + 1))))
             {
-                ItemHandler.UseItem(i);
+                if(ItemHandler.UseItem(i, MyPlayer.MyRotate.LastTarget))
+                    StartColor.a += .5f;
             }
+
+        StartColor.a = Mathf.SmoothStep(StartColor.a, 0, Time.deltaTime *5f);
+
+        if (line != null)
+            line.SetColors(StartColor, EndColor);
     }
 
     void OnDrawGizmos()
@@ -28,7 +43,7 @@ public class Attack : MonoBehaviour
         Gizmos.DrawRay(transform.position, transform.forward * 5);
     }
 
-    void OnGUI()
+    public void sendOnGUI()
     {
         int index = 1;
         foreach (var i in ItemHandler.InstantiatedItems)

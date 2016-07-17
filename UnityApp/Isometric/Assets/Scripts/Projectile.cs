@@ -17,10 +17,15 @@ public class Projectile : MonoBehaviour {
         }
 	}
 
-    void OnEnable()
+    public void ShootMe()
     {
         GetComponent<Rigidbody>().velocity = Vector3.zero;
         GetComponent<Rigidbody>().AddForce(transform.forward * ForwardForce);
+    }
+
+    void OnEnable()
+    {
+        
     }
 
     void OnCollisionEnter(Collision collision)
@@ -34,6 +39,5 @@ public class Projectile : MonoBehaviour {
 
         gameObject.SetActive(false);
         Owner.OnHit(collision);
-
     }
 }

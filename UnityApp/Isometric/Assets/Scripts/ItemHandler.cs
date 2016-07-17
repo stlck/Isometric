@@ -20,12 +20,14 @@ public class ItemHandler : MonoBehaviour {
                 i.CurrentCooldown -= Time.deltaTime;
 	}
 
-    public void UseItem(int i)
+    public bool UseItem(int i, Vector3 target)
     {
         if (InstantiatedItems.Count >= i && InstantiatedItems[i].CurrentCooldown <= 0)
         {
-            InstantiatedItems[i].Use();
+            InstantiatedItems[i].Use(target);
+            return true;
         }
+        return false;
     }
 
     public void SetNewItem(BaseItem i, int index)

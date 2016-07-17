@@ -13,9 +13,9 @@ public class Weapon : BaseItem {
     // Target - Friendly , Enemy, ground
     // Type - AOE, Chain, single, line, trail, wave, pulse
 
-    public override void Use()
+    public override void Use(Vector3 t)
     {
-        base.Use();
+        base.Use(t);
     }
 
     public override BaseItem Setup(ItemHandler owner)

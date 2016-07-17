@@ -13,7 +13,12 @@ public class Stats : MonoBehaviour
     {
         statCanvas = StatCanvas.GetInstance;
         statCanvas.transform.SetParent(transform, false);
+    }
+
+    void Start()
+    {
         health = startHealth;
+        OnScreenGUI.ToDo.Add(sendOnGUI);
     }
 
     public float startHealth;
@@ -38,26 +43,47 @@ public class Stats : MonoBehaviour
 
     public int Strength
     {
-        get { return strength; }
+        get {
+            if (strength > 0)
+                return strength;
+            return 1;
+        }
         set { strength = value; }
     }
 
     public int Perception
     {
-        get { return perception; }
+        get { 
+            if(perception > 0)
+                return perception;
+            return 1;
+        }
         set { perception = value; }
     }
 
     public int Fortitude
     {
-        get { return fortitude; }
+        get {
+            if (fortitude > 0)
+                return fortitude;
+            return 1;
+        }
         set { fortitude = value; }
     }
 
     public int Willpower
     {
-        get { return willpower; }
+        get {
+            if (willpower > 0)
+                return willpower;
+            return 1;
+        }
         set { willpower = value; }
+    }
+
+    public void sendOnGUI()
+    {
+        GUILayout.Label("HEALTH: " + health + "/" + startHealth);
     }
 }
 

@@ -25,7 +25,7 @@ public class BaseItem : MonoBehaviour {
     public ItemHandler Owner;
     public float UseCost = 1;
 
-    public virtual void Use()
+    public virtual void Use(Vector3 target)
     {
         CurrentCooldown = CoolDown;
     }
