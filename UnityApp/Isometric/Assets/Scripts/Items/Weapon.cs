@@ -36,7 +36,7 @@ public class Weapon : BaseItem {
         switch (WeaponType)
         {
             case Type.Area:
-                var coll = Physics.OverlapSphere(c.contacts[0].point, 10);
+                var coll = Physics.OverlapSphere(c.contacts[0].point, AreaForceSize);
                 
                 foreach(var hit in coll)
                 {

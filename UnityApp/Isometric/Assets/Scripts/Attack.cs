@@ -36,7 +36,7 @@ public class Attack : MonoBehaviour
                 }
             }
             if (Input.GetButton("Fire" + (1)))
-                ItemHandler.InstantiatedItem.Use(MyPlayer.MyRotate.LastTarget);
+                ItemHandler.UseItem(MyPlayer.MyRotate.LastTarget);
 
             if (SteamVR.active)
             {

@@ -21,7 +21,7 @@ public class Duplicate : MonoBehaviour
                     for (int k = 0; k < z; k++)
                     {
                         if (i > 0 || j > 0 || k > 0)
-                            Instantiate(transform, transform.position + Vector3.up * j * scale.y + Vector3.right * i * scale.x + Vector3.forward * k * scale.z, transform.rotation, transform.parent);
+                            Instantiate(transform, transform.position + transform.up * j * scale.y + transform.right * i * scale.x + transform.forward * k * scale.z, transform.rotation, transform.parent);
                     }
         }
     }

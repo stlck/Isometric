@@ -14,15 +14,17 @@ public class CreateLevel : MonoBehaviour {
     public float SpawnTime = 2f;
     float timer;
 
-
 	// Use this for initialization
 	void Start () {
-        Random.seed = Seed;
-        var numBlocks = Random.Range(0, MaxBlocks);
-        for(int i = 0; i < numBlocks; i++)
-        {
-            Block b = Instantiate(Blocks[Random.Range(0, Blocks.Count)]) as Block;
-            b.transform.position += new Vector3(Random.Range(-25, 25), 0, Random.Range(-25, 25));
+        if(MaxBlocks > 0)
+        { 
+            Random.seed = Seed;
+            var numBlocks = Random.Range(0, MaxBlocks);
+            for (int i = 0; i < numBlocks; i++)
+            {
+                Block b = Instantiate(Blocks[Random.Range(0, Blocks.Count)]) as Block;
+                b.transform.position += new Vector3(Random.Range(-25, 25), 0, Random.Range(-25, 25));
+            }
         }
 
         OnScreenGUI.ToDo.Add(sendOnGUI);
@@ -55,4 +57,5 @@ public class CreateLevel : MonoBehaviour {
     {
         GUILayout.Label("ENEMIES : " + SpawnedEnemies.Count);
     }
+
 }

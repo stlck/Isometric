@@ -50,7 +50,7 @@ public class ItemHandler : MonoBehaviour {
         if (InstantiatedItem != null)
             Destroy(InstantiatedItem);
 
-        InstantiatedItem = Instantiate(i.Setup(this));
+        InstantiatedItem = i.Setup(this);
         InstantiatedItem.transform.SetParent(ShootPoint);
         /*  if (InstantiatedItems.Count >= index)
           {

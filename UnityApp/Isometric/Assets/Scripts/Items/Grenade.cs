@@ -14,7 +14,8 @@ public class Grenade : Weapon {
     {
         base.Use(target);
 
-        var p = Instantiate(Prefab, target, Prefab.transform.rotation) as AreaOfEffect;
+        var p = Instantiate(Prefab, transform.position, transform.rotation) as AreaOfEffect;
         p.Owner = this;
+        p.forwardForce = Vector3.Distance(transform.position, target);
     }
 }
