@@ -7,7 +7,8 @@ public class ScaleOnInput : MonoBehaviour {
     public SteamVR_TrackedController trObj;
     public bool master;
     public ScaleOnInput Other;
-    //SteamVR_Controller.Device device;
+    public AnimationCurve YCurve;
+
     float deltaDist;
     Vector3 startPos;
 
@@ -16,6 +17,7 @@ public class ScaleOnInput : MonoBehaviour {
 
         //device.GetTouchDown(EVRButtonId.k_EButton_SteamVR_Touchpad);
         //device.GetAxis();
+        startPos = transform.position; 
         trObj.PadTouched += TrObj_PadTouched;
         trObj.Gripped += TrObj_Gripped;
     }
@@ -23,9 +25,7 @@ public class ScaleOnInput : MonoBehaviour {
     private void TrObj_Gripped(object sender, ClickedEventArgs e)
     {
         Debug.Log(transform.position + " " + Other.transform.position);
-        startPos = transform.position;
         deltaDist = Vector3.Distance(transform.position, Other.transform.position);
-        
     }
 
     private void TrObj_PadTouched(object sender, ClickedEventArgs e)
@@ -37,12 +37,18 @@ public class ScaleOnInput : MonoBehaviour {
     void Update () {
         if(trObj.gripped && !Other.trObj.gripped)
         {
-            transform.root.localScale = transform.root.localScale + Vector3.one * (deltaDist - Vector3.Distance(transform.position, Other.transform.position));
+            var scale = transform.root.localScale + Vector3.one * (deltaDist - Vector3.Distance(transform.position, Other.transform.position));
+            scale = Vector3.Min(scale, Vector3.one * 30);
+            scale = Vector3.Max(Vector3.one * 10, scale);
+            
+            transform.root.localScale = scale;
         }
-        if (trObj.gripped && Other.trObj.gripped)
+
+        if (master && trObj.gripped && Other.trObj.gripped)
         {
             var p = transform.root.position;
-            p.y = (transform.position.y + Other.transform.position.y) / 2;
+            p.y = YCurve.Evaluate(2-transform.localPosition.y);/*(transform.localPosition.y * transform.root.localScale.y);
+            p.y += startPos.y*2;*/
             transform.root.position = p;
         }
 

@@ -35,7 +35,7 @@ public class Enemy : MonoBehaviour {
                 if (Vector3.Distance(target.position, transform.position) <= ItemHandler.Items[0].Range)
                 {
                     transform.LookAt(target);
-                    ItemHandler.UseItem(0, target.position);
+                    ItemHandler.UseItem( target.position);
                 }
             }
         }

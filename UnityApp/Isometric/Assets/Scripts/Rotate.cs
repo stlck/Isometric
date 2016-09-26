@@ -5,31 +5,45 @@ public class Rotate : MonoBehaviour {
 
     public float speed;
     public LayerMask HitMask;
-
+    public Transform Origin;
     public Vector3 LastTarget;
-	
-	// Update is called once per frame
-	void Update () {
+    public Transform ShootPoint;
+
+    // Update is called once per frame
+    void Update () {
 
         var playerPlane = new Plane(Vector3.up, transform.position);
 
         // Generate a ray from the cursor position
         var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        if(Origin != null && Origin.gameObject.active)
+        {
+            ray = new Ray(Origin.position, Origin.forward);
+        }
 
         RaycastHit hit;
 
-        if (Physics.SphereCast(ray, 2, out hit, 100, HitMask))
+        //if (Physics.SphereCast(ray, 2, out hit, 200, HitMask))
+        if(Physics.Raycast(ray,out hit, HitMask))
         {
             var targetPoint = hit.point;// ray.GetPoint(hitdist);
-            if(hit.collider.tag == "Enemy")
+            targetPoint.y = transform.position.y;
+
+            if(hit.collider.tag != "Floor")
             {
-                targetPoint = hit.transform.position;
+                ShootPoint.LookAt(hit.point);
+                //targetPoint = hit.transform.position;
             }
-            else
+            else 
             {
-                targetPoint.y = transform.position.y;
+                //targetPoint.y += 1f;
+                //targetPoint.y = transform.position.y;
+                ShootPoint.LookAt(targetPoint + Vector3.up);
+
             }
+
             LastTarget = targetPoint;
+
             transform.LookAt(targetPoint);//rotation = Quaternion.LookRotation(targetPoint - transform.position);
         }
 

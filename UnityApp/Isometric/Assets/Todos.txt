@@ -1,0 +1,30 @@
+Våben:
+Rifle
+Assault rifle
+Shotgun
+Laser
+Rocket launcher
+grenade
+mines
+
+Terrain:
+destructable
+draw walls in byte[] or texture
+Boxes hit -> swap with smaller rigidbody boxes
+
+Util:
+Chek vive present
+
+Game:
+Load next level on player jump down
+spawn enemies -> scale on level count
+Points per enemy, level or time
+Need loading/stading screen
+
+(Abilities:)
+explosion at point
+Heal
+wall
+Stationary shooting point
+haste?
+Create turret'ish

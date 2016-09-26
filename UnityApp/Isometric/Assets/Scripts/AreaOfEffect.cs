@@ -5,6 +5,7 @@ using System.Collections.Generic;
 public class AreaOfEffect : MonoBehaviour {
 
     public float PushForce = 10;
+    public float PushArea = 10;
     public Weapon Owner;
 
     List<Collider> hits = new List<Collider>();
@@ -18,7 +19,8 @@ public class AreaOfEffect : MonoBehaviour {
     {
         if(other.GetComponent<Rigidbody>() != null)
         {
-            other.GetComponent<Rigidbody>().AddExplosionForce(PushForce, transform.position, 20);
+            other.GetComponent<Rigidbody>().isKinematic = false;
+            other.GetComponent<Rigidbody>().AddExplosionForce(PushForce, transform.position, PushArea);
         }
 
         if(other.tag == "Enemy")

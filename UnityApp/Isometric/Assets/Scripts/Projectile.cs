@@ -6,7 +6,7 @@ public class Projectile : MonoBehaviour {
     public RangedWeapon Owner;
     public Transform HitEffect;
     public float ForwardForce = 50;
-    Transform hitEffect;
+    public Transform hitEffect { get; set; }
 
 	// Use this for initialization
 	void Start () {
@@ -17,7 +17,7 @@ public class Projectile : MonoBehaviour {
         }
 	}
 
-    public void ShootMe()
+    public virtual void ShootMe()
     {
         GetComponent<Rigidbody>().velocity = Vector3.zero;
         GetComponent<Rigidbody>().AddForce(transform.forward * ForwardForce);

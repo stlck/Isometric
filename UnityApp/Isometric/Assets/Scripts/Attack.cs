@@ -16,8 +16,8 @@ public class Attack : MonoBehaviour
     void Awake()
     {
         ItemHandler = GetComponent<ItemHandler>();
-        if (line == null)
-            line = GetComponentInChildren<LineRenderer>();
+       // if (line == null)
+      //      line = GetComponentInChildren<LineRenderer>();
 
         OnScreenGUI.ToDo.Add(sendOnGUI);
     }
@@ -25,17 +25,33 @@ public class Attack : MonoBehaviour
     void Update()
     {
         if (!HoveringUseAble)
-        for (int i = 0; i < 3; i++)
-            if ((Input.GetKey((i + 1).ToString()) || Input.GetButton("Fire" + (i + 1))))
+        {
+            for (int i = 0; i < 2; i++)
             {
-                if(ItemHandler.UseItem(i, MyPlayer.MyRotate.LastTarget))
-                    StartColor.a += .5f;
+                if (Input.GetKey((i + 1).ToString())) //|| SteamVR_Controller.Input(SteamVR_Controller.GetDeviceIndex(SteamVR_Controller.DeviceRelation.Leftmost)).GetPress(SteamVR_Controller.ButtonMask.Trigger))
+                {
+                    //swap item
+                    //if (ItemHandler.UseItem(i, MyPlayer.MyRotate.LastTarget))
+                    //    StartColor.a += .5f;
+                }
             }
+            if (Input.GetButton("Fire" + (1)))
+                ItemHandler.InstantiatedItem.Use(MyPlayer.MyRotate.LastTarget);
 
-        StartColor.a = Mathf.SmoothStep(StartColor.a, 0, Time.deltaTime *5f);
+            if (SteamVR.active)
+            {
+                /*if (SteamVR_Controller.Input(SteamVR_Controller.GetDeviceIndex(SteamVR_Controller.DeviceRelation.Leftmost)).GetPress(Valve.VR.EVRButtonId.k_EButton_SteamVR_Trigger))
+                    if (ItemHandler.UseItem(0, MyPlayer.MyRotate.LastTarget))
+                        StartColor.a += .5f;*/
+                if (SteamVR_Controller.Input(SteamVR_Controller.GetDeviceIndex(SteamVR_Controller.DeviceRelation.Rightmost)).GetPress(Valve.VR.EVRButtonId.k_EButton_SteamVR_Trigger))
+                    if (ItemHandler.UseItem( MyPlayer.MyRotate.LastTarget))
+                        StartColor.a += .5f;
+            }
+        }
+      //  StartColor.a = Mathf.SmoothStep(StartColor.a, 0, Time.deltaTime *5f);
 
-        if (line != null)
-            line.SetColors(StartColor, EndColor);
+       // if (line != null)
+       //     line.SetColors(StartColor, EndColor);
     }
 
     void OnDrawGizmos()
@@ -46,9 +62,9 @@ public class Attack : MonoBehaviour
     public void sendOnGUI()
     {
         int index = 1;
-        foreach (var i in ItemHandler.InstantiatedItems)
+        //foreach (var i in ItemHandler.InstantiatedItem)
         {
-            GUILayout.Label(index++ + ") " + i.Name + " " + i.CurrentCooldown + "/" + i.CoolDown);
+            GUILayout.Label(index++ + ") " + ItemHandler.InstantiatedItem.Name + " " + ItemHandler.InstantiatedItem.CurrentCooldown + "/" + ItemHandler.InstantiatedItem.CoolDown);
         }
     }
 }

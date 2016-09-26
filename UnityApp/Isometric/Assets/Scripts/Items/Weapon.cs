@@ -9,6 +9,9 @@ public class Weapon : BaseItem {
     public Target WeaponTarget;
     public Effect WeaponEffect;
 
+    public float PhysicsPushForce;
+    public float AreaForceSize;
+
     // Effect - Fire (dot), Cold (slow), Lightning (stun), Physical
     // Target - Friendly , Enemy, ground
     // Type - AOE, Chain, single, line, trail, wave, pulse
@@ -34,12 +37,27 @@ public class Weapon : BaseItem {
         {
             case Type.Area:
                 var coll = Physics.OverlapSphere(c.contacts[0].point, 10);
+                
                 foreach(var hit in coll)
+                {
                     OnHit(hit);
+                    ApplyForce(hit, c.contacts[0].point);
+                }
                 break;
             case Type.Single:
+            case Type.Line:
                 OnHit(c.collider);
+                ApplyForce(c.collider, c.contacts[0].point);
                 break;
+        }
+    }
+
+    void ApplyForce(Collider c, Vector3 point)
+    {
+        if (c.GetComponent<Rigidbody>() != null)
+        {
+            c.GetComponent<Rigidbody>().isKinematic = false;
+            c.GetComponent<Rigidbody>().AddExplosionForce(PhysicsPushForce, point, AreaForceSize);
         }
     }
 
