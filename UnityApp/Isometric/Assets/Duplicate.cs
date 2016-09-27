@@ -9,9 +9,17 @@ public class Duplicate : MonoBehaviour
     public bool spawn = false;
     public float minForce;
 
+    bool hit = false;
+    float timer = 0f;
+    Material mat;
+    Rigidbody rigidBody;
+
     // Use this for initialization
     void Start()
     {
+        rigidBody = GetComponent<Rigidbody>();
+        mat = GetComponent<MeshRenderer>().material;
+
         if (spawn)
         {
             spawn = false;
@@ -24,12 +32,6 @@ public class Duplicate : MonoBehaviour
                             Instantiate(transform, transform.position + transform.up * j * scale.y + transform.right * i * scale.x + transform.forward * k * scale.z, transform.rotation, transform.parent);
                     }
         }
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
     }
 
     void NoOnMouseDown()
@@ -47,8 +49,25 @@ public class Duplicate : MonoBehaviour
     {
         if (collision.relativeVelocity.magnitude > minForce)
         {
-            GetComponent<Rigidbody>().isKinematic = false;
+            hit = true;
         }
     }
 
+
+    void Update()
+    {
+        if(hit)
+        {
+            timer += Time.deltaTime;
+            mat.SetFloat("_SliceAmount", timer);
+            if(timer >= 1f)
+            {
+                Destroy(gameObject);
+            }
+        }
+        else if(rigidBody.velocity.magnitude >= minForce)
+        {
+            hit = true;
+        }
+    }
 }
