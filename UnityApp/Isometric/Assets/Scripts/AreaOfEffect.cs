@@ -5,8 +5,8 @@ using UnityEngine.Events;
 
 public class AreaOfEffect : MonoBehaviour
 {
-    public float PushForce = 10;
-    public float PushArea = 10;
+    //public float PushForce = 10;
+    //public float PushArea = 10;
     public Weapon Owner;
     public UnityEvent Hit;
     public float forwardForce;

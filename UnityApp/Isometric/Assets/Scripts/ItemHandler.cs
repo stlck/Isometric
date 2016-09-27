@@ -7,22 +7,37 @@ public class ItemHandler : MonoBehaviour {
     public List<BaseItem> Items = new List<BaseItem>();
     public BaseItem InstantiatedItem;
     public Transform ShootPoint;
-    
+    int currentItem = 0;
     // Use this for initialization
 	void Start () {
-        //Items.ForEach((i) => InstantiatedItems.Add(i.Setup(this)));
-        SetNewItem(Items[0]);
-        //InstantiatedItem = Instantiate(Items[0].Setup(this));
-
+        SetNewItem(Items[currentItem]);
     }
 	
 	// Update is called once per frame
     void Update()
     {
-        //foreach (var i in InstantiatedItems)
-            if (InstantiatedItem.CurrentCooldown > 0)
-                InstantiatedItem.CurrentCooldown -= Time.deltaTime;
-	}
+        if (InstantiatedItem.CurrentCooldown > 0)
+            InstantiatedItem.CurrentCooldown -= Time.deltaTime;
+
+        for (int i = 0; i < Items.Count; i++)
+        {
+            if (Input.GetKey((i + 1).ToString())) //|| SteamVR_Controller.Input(SteamVR_Controller.GetDeviceIndex(SteamVR_Controller.DeviceRelation.Leftmost)).GetPress(SteamVR_Controller.ButtonMask.Trigger))
+            {
+                currentItem = i;
+                SetNewItem(Items[currentItem]);
+                //swap item
+                //if (ItemHandler.UseItem(i, MyPlayer.MyRotate.LastTarget))
+                //    StartColor.a += .5f;
+            }
+        }
+        if(SteamVR_Controller.Input(MyPlayer.MyAttack.attackDeviceId).GetTouchUp( Valve.VR.EVRButtonId.k_EButton_SteamVR_Touchpad))
+        {
+            currentItem++;
+            if (currentItem >= Items.Count)
+                currentItem = 0;
+            SetNewItem(Items[currentItem]);
+        }
+    }
 
     public bool UseItem(Vector3 target)
     {
@@ -46,7 +61,7 @@ public class ItemHandler : MonoBehaviour {
 
     public void SetNewItem(BaseItem i)
     {
-        Debug.LogError("SWAP NOT MADE YET");
+        //Debug.LogError("SWAP NOT MADE YET");
         if (InstantiatedItem != null)
             Destroy(InstantiatedItem);
 

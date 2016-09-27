@@ -48,4 +48,10 @@ public class RangedWeapon : Weapon {
 
         return ret;
     }
+
+    void OnDestroy()
+    {
+        foreach (var p in projectiles)
+            Destroy(p, 1f);
+    }
 }

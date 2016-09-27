@@ -9,7 +9,8 @@ public class CreateBlockLevel : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-	    foreach(var be in BlockElements)
+        var bls = Resources.LoadAll<BlockLevel>("BlockLevels");
+	    foreach(var be in bls[Random.Range(0, bls.Length)].BlockElements)
         {
             var b = Instantiate(BaseBlock, be.From + transform.position, Quaternion.identity, transform) as Duplicate;
             b.transform.forward = (be.To - be.From).normalized;
@@ -19,17 +20,5 @@ public class CreateBlockLevel : MonoBehaviour {
         }
 	}
 	
-	// Update is called once per frame
-	void Update () {
-
-    }
-
-    [System.Serializable]
-    public class BlockElement
-    {
-        public Vector3 From;
-        public Vector3 To;
-        public int Height;
-        public int Width;
-    }
+	
 }
