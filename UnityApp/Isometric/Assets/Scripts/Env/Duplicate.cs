@@ -59,14 +59,18 @@ public class Duplicate : MonoBehaviour
         if(hit)
         {
             timer += Time.deltaTime;
-            mat.SetFloat("_SliceAmount", timer);
-            if(timer >= 1f)
+            if(timer >= 3f)
             {
-                Destroy(gameObject);
+                mat.SetFloat("_SliceAmount", timer - 3f);
+                if (timer >= 4f)
+                {
+                    Destroy(gameObject);
+                }
             }
         }
         else if(rigidBody.velocity.magnitude >= minForce)
         {
+            timer = Random.Range(-2f, 2f);
             hit = true;
         }
     }
