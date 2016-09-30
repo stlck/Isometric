@@ -15,8 +15,8 @@ public class RangedWeapon : Weapon {
 
         for (int i = 0; i < ShotsFired; i++)
         {
-            projectiles[currentIndex].transform.position = Owner.transform.position + Owner.transform.forward;// Projectile.transform.position;
-            projectiles[currentIndex].transform.LookAt(target);
+            projectiles[currentIndex].transform.position = Owner.ShootPoint.position;//.transform.position + Owner.transform.forward;// Projectile.transform.position;
+            projectiles[currentIndex].transform.forward = Owner.ShootPoint.forward;
             //projectiles[currentIndex].transform.forward = Owner.transform.forward;
             //projectiles[currentIndex].transform.forward = 3 * Owner.transform.forward + Owner.transform.up * Random.Range(-1 / MyPlayer.MyStats.Perception, 1 / MyPlayer.MyStats.Perception) + Owner.transform.right * Random.Range(-1 / MyPlayer.MyStats.Perception, 1 / MyPlayer.MyStats.Perception);
             projectiles[currentIndex].gameObject.SetActive(true);

@@ -21,7 +21,7 @@ public class ItemHandler : MonoBehaviour {
 
         for (int i = 0; i < Items.Count; i++)
         {
-            if (Input.GetKey((i + 1).ToString())) //|| SteamVR_Controller.Input(SteamVR_Controller.GetDeviceIndex(SteamVR_Controller.DeviceRelation.Leftmost)).GetPress(SteamVR_Controller.ButtonMask.Trigger))
+            if (currentItem != i && Input.GetKeyDown((i + 1).ToString())) //|| SteamVR_Controller.Input(SteamVR_Controller.GetDeviceIndex(SteamVR_Controller.DeviceRelation.Leftmost)).GetPress(SteamVR_Controller.ButtonMask.Trigger))
             {
                 currentItem = i;
                 SetNewItem(Items[currentItem]);
@@ -63,10 +63,11 @@ public class ItemHandler : MonoBehaviour {
     {
         //Debug.LogError("SWAP NOT MADE YET");
         if (InstantiatedItem != null)
-            Destroy(InstantiatedItem);
+            Destroy(InstantiatedItem.gameObject);
 
         InstantiatedItem = i.Setup(this);
         InstantiatedItem.transform.SetParent(ShootPoint);
+        InstantiatedItem.transform.localPosition = Vector3.zero;
         /*  if (InstantiatedItems.Count >= index)
           {
               Destroy(InstantiatedItems[index].gameObject);
