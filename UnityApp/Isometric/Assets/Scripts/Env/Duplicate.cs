@@ -3,9 +3,9 @@ using System.Collections;
 
 public class Duplicate : MonoBehaviour
 {
-    public int x = 3;
-    public int y = 6;
-    public int z = 2;
+    public float x = 3;
+    public float y = 6;
+    public float z = 2;
     public bool spawn = false;
     public float minForce;
 
@@ -29,22 +29,20 @@ public class Duplicate : MonoBehaviour
                     for (int k = 0; k < z; k++)
                     {
                         if (i > 0 || j > 0 || k > 0)
+                        {
+                            /*var go =(Transform)*/
                             Instantiate(transform, transform.position + transform.up * j * scale.y + transform.right * i * scale.x + transform.forward * k * scale.z, transform.rotation, transform.parent);
+                            //go.SetParent(transform);
+                        }
                     }
+
+            var nav = gameObject.AddComponent<NavMeshObstacle>();
+            nav.center = Vector3.right * ((x / 2) - .5f) + Vector3.up * ((y / 2) - .5f) + Vector3.forward * ((z/2)-.5f);
+            nav.size = new Vector3(x, y, z);
+
         }
     }
-
-    void NoOnMouseDown()
-    {
-        var c = Physics.OverlapSphere(transform.position, 4);
-        foreach (var coll in c)
-            if (coll.GetComponent<Rigidbody>() != null)
-            {
-                coll.GetComponent<Rigidbody>().isKinematic = false;
-                coll.GetComponent<Rigidbody>().AddExplosionForce(500, transform.position, 4);
-            }
-    }
-
+    
     public void OnCollisionEnter(Collision collision)
     {
         if (collision.relativeVelocity.magnitude > minForce)
@@ -52,7 +50,6 @@ public class Duplicate : MonoBehaviour
             hit = true;
         }
     }
-
 
     void Update()
     {
