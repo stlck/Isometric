@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 public class ItemHandler : MonoBehaviour {
 
@@ -75,5 +76,20 @@ public class ItemHandler : MonoBehaviour {
           }
 
           InstantiatedItems = i.Setup(this);*/
+    }
+
+    public void AddItem(int index, BaseItem item)
+    {
+        if (index >= Items.Count)
+        {
+            Items.Add(item);
+            SetNewItem(Items.Last());
+        }
+        else
+        {
+            Items[index] = item;
+            SetNewItem(Items[index]);
+        }
+
     }
 }

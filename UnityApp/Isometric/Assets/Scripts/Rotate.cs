@@ -45,8 +45,11 @@ public class Rotate : MonoBehaviour {
         {
             var targetPoint = hit.point;// ray.GetPoint(hitdist);
             targetPoint.y = transform.position.y;
+            var sPoint = hit.point;
 
-            if(hit.collider.tag != "Floor")
+            if (hit.collider.tag == "Floor")
+                sPoint += targetPoint + Vector3.up;
+            /*if(hit.collider.tag != "Floor")
             {
                 ShootPoint.LookAt(hit.point);
                 //targetPoint = hit.transform.position;
@@ -57,9 +60,11 @@ public class Rotate : MonoBehaviour {
                 //targetPoint.y = transform.position.y;
                 ShootPoint.LookAt(targetPoint + Vector3.up);
 
-            }
+            }*/
+            ShootPoint.LookAt(sPoint);
 
             LastTarget = targetPoint;
+            Debug.Log("HIT : " + hit.point + " . T: " + targetPoint + " . tr :" + transform.position +  " . s :" + sPoint);
 
             transform.LookAt(targetPoint);//rotation = Quaternion.LookRotation(targetPoint - transform.position);
         }

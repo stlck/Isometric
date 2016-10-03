@@ -25,7 +25,7 @@ public class UseableCanvas : MonoBehaviour {
 	
 	public void Show(Useable t) {
         target = t;
-        UsableName.Invoke(t.name);
+        UsableName.Invoke(t.FoundItem.Name);
         transform.position = target.transform.position + Offset;
 
         gameObject.SetActive(true);

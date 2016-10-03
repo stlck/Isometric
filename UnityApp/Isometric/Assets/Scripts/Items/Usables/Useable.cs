@@ -29,12 +29,14 @@ public class Useable : MonoBehaviour {
     {
         if(Vector3.Distance( MyPlayer.MyTransform.position, transform.position) < 3)
         {
-            UseableCanvas.Instance.Show(this);
+            if(UseableCanvas.Instance != null)
+                UseableCanvas.Instance.Show(this);
         }
     }
 
     public void Use(int index)
     {
-        MyPlayer.MyItemHandler.SetNewItem(FoundItem);
+        MyPlayer.MyItemHandler.Items[index] = FoundItem;
+        MyPlayer.MyItemHandler.SetNewItem(MyPlayer.MyItemHandler.Items[index]);
     }
 }

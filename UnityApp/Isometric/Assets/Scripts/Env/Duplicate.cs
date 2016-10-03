@@ -9,6 +9,8 @@ public class Duplicate : MonoBehaviour
     public bool spawn = false;
     public float minForce;
 
+    public float Health = 300;
+
     bool hit = false;
     float timer = 0f;
     Material mat;
@@ -31,7 +33,13 @@ public class Duplicate : MonoBehaviour
                         if (i > 0 || j > 0 || k > 0)
                         {
                             /*var go =(Transform)*/
-                            Instantiate(transform, transform.position + transform.up * j * scale.y + transform.right * i * scale.x + transform.forward * k * scale.z, transform.rotation, transform.parent);
+                            Instantiate(transform, 
+                                transform.position + 
+                                transform.up * j * scale.y + 
+                                transform.right * i * scale.x + 
+                                transform.forward * k * scale.z, 
+                                transform.rotation, 
+                                transform.parent);
                             //go.SetParent(transform);
                         }
                     }
@@ -39,15 +47,17 @@ public class Duplicate : MonoBehaviour
             var nav = gameObject.AddComponent<NavMeshObstacle>();
             nav.center = Vector3.right * ((x / 2) - .5f) + Vector3.up * ((y / 2) - .5f) + Vector3.forward * ((z/2)-.5f);
             nav.size = new Vector3(x, y, z);
-
         }
     }
     
     public void OnCollisionEnter(Collision collision)
     {
-        if (collision.relativeVelocity.magnitude > minForce)
+        //Debug.Log("Rel : " + collision.relativeVelocity + ". " + collision.relativeVelocity.magnitude);
+
+        if (!hit && collision.relativeVelocity.magnitude > minForce)
         {
-            hit = true;
+            //hit = true;
+            Health -= collision.relativeVelocity.magnitude;
         }
     }
 
@@ -65,7 +75,7 @@ public class Duplicate : MonoBehaviour
                 }
             }
         }
-        else if(rigidBody.velocity.magnitude >= minForce)
+        else if(Health<= 0)//(rigidBody.velocity.magnitude >= minForce)
         {
             timer = Random.Range(-2f, 2f);
             hit = true;
