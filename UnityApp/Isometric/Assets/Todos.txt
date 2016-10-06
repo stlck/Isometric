@@ -26,5 +26,7 @@ explosion at point
 Heal
 wall
 Stationary shooting point
-haste?
+haste/speed?
+Push/Force
 Create turret'ish
+Turret/drone
