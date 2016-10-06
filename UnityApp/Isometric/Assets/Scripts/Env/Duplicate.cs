@@ -21,7 +21,8 @@ public class Duplicate : MonoBehaviour
     {
         rigidBody = GetComponent<Rigidbody>();
         mat = GetComponent<MeshRenderer>().material;
-
+        mat.SetTextureOffset("_MainTex", new Vector2(((float)Random.Range(1,5))/4f, ((float)Random.Range(1, 5)) / 4f));
+        
         if (spawn)
         {
             spawn = false;
