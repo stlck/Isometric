@@ -3,10 +3,10 @@ using System.Collections;
 
 public class Duplicate : MonoBehaviour
 {
-    public float x = 3;
-    public float y = 6;
-    public float z = 2;
-    public bool spawn = false;
+    //public float x = 3;
+    //public float y = 6;
+    //public float z = 2;
+    //public bool spawn = false;
     public float minForce;
 
     public float Health = 300;
@@ -23,32 +23,11 @@ public class Duplicate : MonoBehaviour
         mat = GetComponent<MeshRenderer>().material;
         mat.SetTextureOffset("_MainTex", new Vector2(((float)Random.Range(1,5))/4f, ((float)Random.Range(1, 5)) / 4f));
         
-        if (spawn)
-        {
-            spawn = false;
-            var scale = transform.localScale;
-            for (int i = 0; i < x; i++)
-                for (int j = 0; j < y; j++)
-                    for (int k = 0; k < z; k++)
-                    {
-                        if (i > 0 || j > 0 || k > 0)
-                        {
-                            /*var go =(Transform)*/
-                            Instantiate(transform, 
-                                transform.position + 
-                                transform.up * j * scale.y + 
-                                transform.right * i * scale.x + 
-                                transform.forward * k * scale.z, 
-                                transform.rotation, 
-                                transform.parent);
-                            //go.SetParent(transform);
-                        }
-                    }
-
-            var nav = gameObject.AddComponent<NavMeshObstacle>();
-            nav.center = Vector3.right * ((x / 2) - .5f) + Vector3.up * ((y / 2) - .5f) + Vector3.forward * ((z/2)-.5f);
-            nav.size = new Vector3(x, y, z);
-        }
+        //if (spawn)
+        //{
+        //    spawn = false;
+            
+        //}
     }
     
     public void OnCollisionEnter(Collision collision)
