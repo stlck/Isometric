@@ -64,7 +64,7 @@ public class Rotate : MonoBehaviour {
             ShootPoint.LookAt(sPoint);
 
             LastTarget = targetPoint;
-            Debug.Log("HIT : " + hit.point + " . T: " + targetPoint + " . tr :" + transform.position +  " . s :" + sPoint);
+            //Debug.Log("HIT : " + hit.point + " . T: " + targetPoint + " . tr :" + transform.position +  " . s :" + sPoint);
 
             transform.LookAt(targetPoint);//rotation = Quaternion.LookRotation(targetPoint - transform.position);
         }

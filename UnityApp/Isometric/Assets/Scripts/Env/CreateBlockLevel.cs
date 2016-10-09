@@ -92,25 +92,28 @@ public class CreateBlockLevel : MonoBehaviour {
     public ProceduralBlocks pb;
     void spawnProcedural()
     {
-        foreach (Transform c in transform)
-            Destroy(c.gameObject);
-
         if(pb != null)
         {
+            foreach (Transform c in transform)
+                Destroy(c.gameObject);
+
             var scale = new Vector3(FloorBlockSize, 1, FloorBlockSize);
             var m = pb.GenerateMap((int)FloorSize.x, (int) FloorSize.y, 2);
-            for (int i = 0; i < pb.width; i++)
-                for (int j = 0; j < pb.height; j++)
+            for (int i = 0; i < FloorSize.x; i++)
+                for (int j = 0; j < FloorSize.y; j++)
                 {
                     if (m[i, j] == 0)
                     {
-                        if (pb.survivingRooms.Any(n => n.tiles.Contains(new ProceduralBlocks.Coord(i, j))))
-                            ;
+                        //if (pb.survivingRooms.Any(n => n.tiles.Contains(new ProceduralBlocks.Coord(i, j))))
+                        //    ;
                         var t = (Transform)Instantiate(BaseFloorBlock, Vector3.right * FloorBlockSize * i + Vector3.forward * FloorBlockSize * j, BaseFloorBlock.rotation, transform);
                         t.Rotate(Vector3.up, Random.Range(0, 4) * 90, Space.World);
                         t.localScale = FloorBlockSize * Vector3.one;//scale;
                     }
                 }
+
+            if(MyPlayer.MyTransform != null)
+                MyPlayer.MyTransform.position = Vector3.up + pb.survivingRooms[0].tiles[0].tileX * Vector3.right * FloorBlockSize + pb.survivingRooms[0].tiles[0].tileY * Vector3.forward * FloorBlockSize;
         }
     }
 }

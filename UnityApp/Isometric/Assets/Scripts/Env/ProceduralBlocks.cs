@@ -14,12 +14,12 @@ public class ProceduralBlocks : MonoBehaviour
     [Range(0, 100)]
     public int randomFillPercent;
 
-    int[,] map;
+    public int[,] map;
 
     public List<List<Coord>> roomRegions;
     public List<Room> survivingRooms;
 
-    public int[,] GenerateMap(int w, int h, int smooth = 5)
+    public virtual int[,] GenerateMap(int w, int h, int smooth = 5)
     {
         width = w;
         height = h;
@@ -55,7 +55,7 @@ public class ProceduralBlocks : MonoBehaviour
         //meshGen.GenerateMesh(borderedMap, 1);
     }
 
-    void ProcessMap()
+    public void ProcessMap()
     {
         List<List<Coord>> wallRegions = GetRegions(1);
         int wallThresholdSize = 50;
@@ -74,7 +74,7 @@ public class ProceduralBlocks : MonoBehaviour
         roomRegions = GetRegions(0);
         int roomThresholdSize = 50;
         survivingRooms = new List<Room>();
-
+        
         foreach (List<Coord> roomRegion in roomRegions)
         {
             if (roomRegion.Count < roomThresholdSize)
