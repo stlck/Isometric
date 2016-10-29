@@ -31,7 +31,15 @@ public class ProceduralBlocks : MonoBehaviour
             SmoothMap();
         }
 
+        outputMap();
+
+        map = AddRooms(map, 2, 6);
+
+        outputMap();
+
         ProcessMap();
+
+        outputMap();
 
         int borderSize = 1;
         int[,] borderedMap = new int[width + borderSize * 2, height + borderSize * 2];
@@ -44,7 +52,8 @@ public class ProceduralBlocks : MonoBehaviour
                 {
                     borderedMap[x, y] = map[x - borderSize, y - borderSize];
                 }
-                else {
+                else
+                {
                     borderedMap[x, y] = 1;
                 }
             }
@@ -57,7 +66,7 @@ public class ProceduralBlocks : MonoBehaviour
 
     public void ProcessMap()
     {
-        List<List<Coord>> wallRegions = GetRegions(1);
+        /*List<List<Coord>> wallRegions = GetRegions(1);
         int wallThresholdSize = 50;
 
         foreach (List<Coord> wallRegion in wallRegions)
@@ -69,10 +78,10 @@ public class ProceduralBlocks : MonoBehaviour
                     map[tile.tileX, tile.tileY] = 0;
                 }
             }
-        }
+        }*/
 
         roomRegions = GetRegions(0);
-        int roomThresholdSize = 50;
+        int roomThresholdSize = 20;
         survivingRooms = new List<Room>();
         
         foreach (List<Coord> roomRegion in roomRegions)
@@ -206,6 +215,7 @@ public class ProceduralBlocks : MonoBehaviour
                     int drawY = c.tileY + y;
                     if (IsInMapRange(drawX, drawY))
                     {
+                        if(map[drawX, drawY] == 1)
                         map[drawX, drawY] = 0;
                     }
                 }
@@ -284,7 +294,7 @@ public class ProceduralBlocks : MonoBehaviour
         {
             for (int y = 0; y < height; y++)
             {
-                if (mapFlags[x, y] == 0 && map[x, y] == tileType)
+                if (mapFlags[x, y] == 0 && (tileType == 1 && map[x, y] == tileType || tileType == 0 && map[x,y] != 1))
                 {
                     List<Coord> newRegion = GetRegionTiles(x, y);
                     regions.Add(newRegion);
@@ -404,6 +414,74 @@ public class ProceduralBlocks : MonoBehaviour
         return wallCount;
     }
 
+    int[,] AddRooms(int[,] map, int RoomsMin, int RoomsMax)
+    {
+        var rooms = UnityEngine.Random.Range(RoomsMin, RoomsMax);
+
+        for (int i = 0; i < rooms; i++)
+        {
+            ProceduralBlocks.Coord c = new ProceduralBlocks.Coord(UnityEngine.Random.Range(0, width), UnityEngine.Random.Range(0, height));
+
+            map[c.tileX, c.tileY] = 2;
+
+            var sW = UnityEngine.Random.Range(4, 10);
+            var sH = UnityEngine.Random.Range(4, 10);
+
+            for (int a = c.tileX - sW / 2; a <= c.tileX + sW / 2; a++)
+                for (int b = c.tileY - sH / 2; b <= c.tileY + sH / 2; b++)
+                {
+                    //if ( Mathf.Clamp(a, 0, MaxWidth) == a && Mathf.Clamp(b, 0, MaxHeight) == b)
+                    if (a >= 0 && a < width && b >= 0 && b < height)
+                    {
+                        map[a, b] = 2;
+                    }
+                }
+
+            // if to tiles around - connect
+            for (int a = c.tileX - 1 - sW / 2; a <= c.tileX +1 + sW / 2; a++)
+            {
+                if (a >= 0 && a < width && c.tileY - 1 - sH / 2 >= 0 && c.tileY - 1 - sH / 2 < height)
+                {
+                    map[a, c.tileY - 1 - sH / 2] = 3;
+                }
+                if (a >= 0 && a < width && c.tileY + 1 + sH / 2 >= 0 && c.tileY + 1 + sH / 2 < height)
+                {
+                    map[a, c.tileY + 1 + sH / 2] = 3;
+                }
+            }
+
+            for (int b = c.tileY -1 - sH / 2; b <= c.tileY + 1 + sH / 2; b++)
+            {
+                if (b >= 0 && b < height && c.tileX - 1 - sW / 2 >= 0 && c.tileX - 1 - sW / 2 < width)
+                {
+                    map[c.tileX - 1 - sW / 2,b] = 3;
+                }
+                if (b >= 0 && b < height && c.tileX + 1 + sW / 2 >= 0 && c.tileX + 1 + sW / 2 < width)
+                {
+                    map[c.tileX + 1 + sW / 2,b] = 3;
+                }
+            }
+        }
+        
+        return map;
+    }
+
+    void outputMap()
+    {
+        string output = "";
+
+        for(int i = 0; i < width; i++)
+        {
+            for(int j = 0; j < height; j++)
+            {
+                output += map[i, j];
+            }
+            output += "\n";
+        }
+
+        Debug.Log(output);
+    }
+
     public struct Coord
     {
         public int tileX;
@@ -445,7 +523,7 @@ public class ProceduralBlocks : MonoBehaviour
                     {
                         if (x == tile.tileX || y == tile.tileY)
                         {
-                            if (map[x, y] == 1)
+                            if (x >= 0 && y >= 0 && map[x, y] == 1)
                             {
                                 edgeTiles.Add(tile);
                             }

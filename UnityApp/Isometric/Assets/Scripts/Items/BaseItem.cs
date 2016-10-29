@@ -13,6 +13,9 @@ public class BaseItem : MonoBehaviour {
         UnityEditor.EditorUtility.SetDirty(i);
     }*/
 
+    public AudioSource Audio;
+    public float StartAudioAt = 0f;
+    public float EndAudioAt = 0f;
     public string Name;
     public Texture2D Icon;
     public string Description;
@@ -28,6 +31,21 @@ public class BaseItem : MonoBehaviour {
     public virtual void Use(Vector3 target)
     {
         CurrentCooldown = CoolDown;
+        if (Audio != null)
+        {
+            if(EndAudioAt > 0)
+            { 
+            //Audio.time = StartAudioAt;
+            Audio.SetScheduledEndTime(EndAudioAt);
+            //Audio.SetScheduledStartTime(StartAudioAt);
+            Audio.PlayScheduled(StartAudioAt);
+            }
+            else
+            {
+                Audio.time = StartAudioAt;
+                Audio.Play();
+            }
+        }
     }
 	
     public virtual BaseItem Setup(ItemHandler owner)

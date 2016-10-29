@@ -12,12 +12,11 @@ public class CreateBlockLevel : MonoBehaviour {
     public int FloorBlockSize = 5;
     public Transform BaseFloorBlock;
     public List<Material> FloorMats;
-
+    
     public bool Procedural = true;
 
     // Use this for initialization
     void Start () {
-        BaseFloorBlock.GetComponent<MeshRenderer>().material.mainTexture = determineMaterial(-1,-1).mainTexture;// FloorMats[Random.Range(0, FloorMats.Count)];
 
         if(Procedural)
             spawnProcedural();
@@ -99,16 +98,32 @@ public class CreateBlockLevel : MonoBehaviour {
 
             var scale = new Vector3(FloorBlockSize, 1, FloorBlockSize);
             var m = pb.GenerateMap((int)FloorSize.x, (int) FloorSize.y, 2);
+            //m = ProceduralRooms.AddRooms(m, (int)FloorSize.x, (int)FloorSize.y, 3,5);
+
             for (int i = 0; i < FloorSize.x; i++)
                 for (int j = 0; j < FloorSize.y; j++)
                 {
-                    if (m[i, j] == 0)
+                    if (m[i, j] != 1)
                     {
                         //if (pb.survivingRooms.Any(n => n.tiles.Contains(new ProceduralBlocks.Coord(i, j))))
                         //    ;
                         var t = (Transform)Instantiate(BaseFloorBlock, Vector3.right * FloorBlockSize * i + Vector3.forward * FloorBlockSize * j, BaseFloorBlock.rotation, transform);
                         t.Rotate(Vector3.up, Random.Range(0, 4) * 90, Space.World);
                         t.localScale = FloorBlockSize * Vector3.one;//scale;
+
+                        t.GetComponent<MeshRenderer>().material = FloorMats[m[i,j]];// FloorMats[Random.Range(0, FloorMats.Count)];
+
+                        if(m[i,j] == 3)
+                        {
+                            for(int k = 1; k < 4; k++)
+                            {
+                                t = (Transform)Instantiate(BaseBlock.transform, Vector3.right * FloorBlockSize * i  + Vector3.up * k  * FloorBlockSize + Vector3.forward * FloorBlockSize * j, BaseBlock.transform.rotation, transform);
+                                t.Rotate(Vector3.up, Random.Range(0, 4) * 90, Space.World);
+                                t.localScale = FloorBlockSize * Vector3.one;//scale;
+
+                                t.GetComponent<MeshRenderer>().material.mainTexture = ( FloorMats[m[i, j]].mainTexture);// FloorMats[Random.Range(0, FloorMats.Count)];
+                            }
+                        }
                     }
                 }
 

@@ -4,6 +4,11 @@
 		_MainTex ("Albedo (RGB)", 2D) = "white" {}
 		_Glossiness ("Smoothness", Range(0,1)) = 0.5
 		_Metallic ("Metallic", Range(0,1)) = 0.0
+
+		_SliceGuide("Slice Guide (RGB)", 2D) = "white" {}
+		_SliceAmount("Slice Amount", Range(0.0, 1.0)) = 0.5
+		_BurnSize("Burn Size", Range(0.0, 1.0)) = 0.15
+		_BurnRamp("Burn Ramp (RGB)", 2D) = "white" {}
 	}
 	SubShader {
 		Tags { "RenderType"="Opaque" }

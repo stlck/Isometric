@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Linq;
 using System.Collections.Generic;
 
 public class ProceduralRooms : ProceduralBlocks {
@@ -23,6 +24,67 @@ public class ProceduralRooms : ProceduralBlocks {
 	void Update () {
 	
 	}
+
+    public static int[,] AddRooms (int[,] map, int width, int height, int RoomsMin, int RoomsMax)
+    {
+        var rooms = Random.Range(RoomsMin, RoomsMax);
+
+        for (int i = 0; i < rooms; i++)
+        {
+            ProceduralBlocks.Coord c = new ProceduralBlocks.Coord(Random.Range(0, width), Random.Range(0, height));
+
+            map[c.tileX, c.tileY] = 0;
+
+            var sW = Random.Range(4, 10);
+            var sH = Random.Range(4, 10);
+
+            for (int a = c.tileX - sW / 2; a <= c.tileX + sW / 2; a++)
+                for (int b = c.tileY - sH / 2; b <= c.tileY + sH / 2; b++)
+                {
+                    //if ( Mathf.Clamp(a, 0, MaxWidth) == a && Mathf.Clamp(b, 0, MaxHeight) == b)
+                    if (a >= 0 && a < width && b >= 0 && b < height)
+                    {
+                        map[a, b] = 0;
+                    }
+                }
+
+            // set walls = 3
+
+            //if(c.tileY - sH / 2 >= 0 && c.tileY - sH / 2 < height)
+            for (int a = c.tileX - sW / 2; a <= c.tileX + sW / 2; a++)
+            {
+                if (a >= 0 && a < width && c.tileY - sH / 2 >= 0 && c.tileY - sH / 2 < height)
+                {
+                    map[a, c.tileY - sH / 2] = 3;
+                    Debug.Log("3");
+                }
+                if (a >= 0 && a < width && c.tileY + sH / 2 >= 0 && c.tileY + sH / 2 < height)
+                {
+                    map[a, c.tileY + sH / 2] = 3;
+                    Debug.Log("3");
+                }
+
+            }
+
+            for (int b = c.tileY - sH / 2; b <= c.tileY + sH / 2; b++)
+            {
+                if (b >= 0 && b < height && c.tileX - sW / 2 >= 0 && c.tileX - sW / 2 < width)
+                {
+                    map[b, c.tileX - sW / 2] = 3;
+                    Debug.Log("3");
+                }
+                if (b >= 0 && b < height && c.tileX + sW / 2 >= 0 && c.tileX + sW / 2 < width)
+                {
+                    map[b, c.tileX + sW / 2] = 3;
+                    Debug.Log("3");
+                }
+            }
+        }
+
+        
+
+        return map;
+    }
 
     public override int[,] GenerateMap(int w, int h, int smooth = 5)
     {
@@ -55,7 +117,7 @@ public class ProceduralRooms : ProceduralBlocks {
                     if( a >= 0 && a < width && b >= 0 && b < height)
                         map[a, b] = 0;
                 }
-            survivingRooms.Add(new Room())
+            
             //ProcessMap();
         }
 
