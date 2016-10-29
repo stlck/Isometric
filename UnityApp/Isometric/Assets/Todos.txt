@@ -30,3 +30,56 @@ haste/speed?
 Push/Force
 Create turret'ish
 Turret/drone
+
+
+FROM CREATEBLOCKLEVEL:
+
+ void spawnProcedural()
+    {
+        if(pb != null)
+        {
+            foreach (Transform c in transform)
+                Destroy(c.gameObject);
+
+            var scale = new Vector3(FloorBlockSize, 1, FloorBlockSize);
+            var m = pb.GenerateMap((int)FloorSize.x, (int) FloorSize.y, 2);
+            var mat = FloorMats[Random.Range(0, FloorMats.Count)];
+
+            for (int i = 0; i < FloorSize.x; i++)
+                for (int j = 0; j < FloorSize.y; j++)
+                {
+                    if (m[i, j] == 0)
+                    {
+                        //if (pb.survivingRooms.Any(n => n.tiles.Contains(new ProceduralBlocks.Coord(i, j))))
+                        //    ;
+                        var p = Mathf.PerlinNoise(i / 10f, j / 10f) + 1f;
+                        //Debug.Log("p "  +p);
+                        if (p > 1.8f)
+                            p -= .4f;
+                        else
+                            p = Mathf.Clamp(p, 1f, 1.4f) ;
+
+                        p *= 6f;
+                        
+                        var t = (Transform)Instantiate(BaseFloorBlock, 
+                            Vector3.right * FloorBlockSize * i - 
+                            Vector3.up * p + 
+                            Vector3.forward * FloorBlockSize * j, 
+                            BaseFloorBlock.rotation, transform);
+
+                       /* if (i < FloorSize.x - 1 && m[i + 1, j] == 1 && Random.Range(0,3) == 0)
+                            t.position += Vector3.up * FloorBlockSize / 2;
+                        else if(j < FloorSize.y - 1 && m[i, j+1] == 1 && Random.Range(0, 3) == 0)
+                            t.position += Vector3.up * FloorBlockSize / 2;*/
+
+                        t.Rotate(Vector3.up, Random.Range(0, 4) * 90, Space.World);
+                        t.localScale = FloorBlockSize * Vector3.one;//scale;
+                        t.GetComponent<Renderer>().material = mat;
+                        t.GetComponent<Renderer>().material.color = mat.color * (p - .4f) / 6;
+                    }
+                }
+
+            if(MyPlayer.MyTransform != null)
+                MyPlayer.MyTransform.position = Vector3.up + pb.survivingRooms[0].tiles[0].tileX * Vector3.right * FloorBlockSize + pb.survivingRooms[0].tiles[0].tileY * Vector3.forward * FloorBlockSize;
+        }
+    }
